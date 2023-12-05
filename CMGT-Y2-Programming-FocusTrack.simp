@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<sim-project version="14.00" multi-file="no" uid="simp7a6ab99e04d6462b9136ceab2625eeea" creation-date="12/05/2023 18:04:49">
+  <meta>
+    <name>CMGT-Y2-Programming-FocusTrack</name>
+    <authors>Vilius Alaunis</authors>
+    <description />
+  </meta>
+  <counters models="1">
+    <entity-names>
+      <counter>
+        <item-type type-id="class" type="Class" />
+        <value>1</value>
+      </counter>
+    </entity-names>
+    <entity-ids>
+      <counter>
+        <item-type type-id="class" type="Class" />
+        <value>2</value>
+      </counter>
+    </entity-ids>
+    <diagrams>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlClassDiagram</type>
+        <value>1</value>
+      </counter>
+    </diagrams>
+    <fields />
+  </counters>
+  <alias-groups />
+  <management uid="md-93c70a5d93d3415a95d9f37d8213cb21" name="" task-id-sequence="0">
+    <persons>
+      <person id="">
+        <first-name>Vilius</first-name>
+        <last-name>Alaunis</last-name>
+        <role />
+        <e-mail />
+        <phone-number />
+        <description />
+        <color>#00000000</color>
+      </person>
+    </persons>
+    <teams />
+    <sprints />
+    <projects />
+    <modules />
+    <tasks />
+    <to-dos />
+  </management>
+  <glossary id="glsr-3c3e287eb30a4858b22be043f78c3341" name="" order-index="-1" />
+  <types default="UML">
+    <type-sets>
+      <type-set file="UmlTypes.xml" />
+    </type-sets>
+    <custom-types>
+      <parameters />
+      <types />
+    </custom-types>
+  </types>
+  <items />
+  <models>
+    <model id="p50b986c8cd4d4fd5abfe8e3e10fe563b_450306733" name="Model1" namespace="" order-index="1">
+      <meta>
+        <authors>
+          <author>Vilius Alaunis</author>
+        </authors>
+        <description />
+        <creation-date>12/05/2023 18:05:15</creation-date>
+        <change-date>01/01/0001 00:00:00</change-date>
+        <revision-count>0</revision-count>
+        <version />
+      </meta>
+      <abstract-items />
+      <sub-models />
+      <diagram type="uml-class" id="p535a419269e7429494327225b6e923ae_648720113" name="Reusable weapon system" order-index="1" uid="" auto-routed-paths="false" default-line-style="default">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author>Vilius Alaunis</author>
+          </authors>
+          <description />
+          <creation-date>12/05/2023 18:05:15</creation-date>
+          <change-date>12/05/2023 18:33:12</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="9d6de01f573446538f32f922c2aee6b8" cid="C001" type="class" name="TurretController" creator="" creation-date="12/05/2023 18:33:12" />
+        </abstract-items>
+        <layer id="9041f81bbd8c439abe88f1050e389d30" name="Default" visible="true" enabled="true" locked="false">
+          <item id="9d6de01f573446538f32f922c2aee6b8" iid="6a9eedad272a4e08bc2c01a8892dd2fa" show-fields="true" creation-date="12/05/2023 18:33:12" order-index="0" type="entity">
+            <layout ax="478" ay="203" awidth="140" aheight="160" x="478" y="203" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+        </layer>
+      </diagram>
+    </model>
+  </models>
+</sim-project>
