@@ -263,5 +263,15 @@ namespace Unity.FPS.Gameplay
 
             return 0f;
         }
+
+        public bool GetInteractInput()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetButtonDown(GameConstants.k_ButtonNameInteract);
+            }
+
+            return false;
+        }
     }
 }
