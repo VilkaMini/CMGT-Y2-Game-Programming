@@ -23,6 +23,7 @@ namespace Unity.FPS.Gameplay
         GameFlowManager m_GameFlowManager;
         PlayerCharacterController m_PlayerCharacterController;
         bool m_FireInputWasHeld;
+        private bool m_LockFire = false;
 
         void Start()
         {
@@ -44,6 +45,11 @@ namespace Unity.FPS.Gameplay
         public bool CanProcessInput()
         {
             return Cursor.lockState == CursorLockMode.Locked && !m_GameFlowManager.GameIsEnding;
+        }
+        
+        public void LockFire(bool status)
+        {
+            m_LockFire = status;
         }
 
         public Vector3 GetMoveInput()
@@ -106,7 +112,7 @@ namespace Unity.FPS.Gameplay
 
         public bool GetFireInputHeld()
         {
-            if (CanProcessInput())
+            if (CanProcessInput() && !m_LockFire)
             {
                 bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadFire) != 0f;
                 if (isGamepad)
@@ -269,6 +275,16 @@ namespace Unity.FPS.Gameplay
             if (CanProcessInput())
             {
                 return Input.GetButtonDown(GameConstants.k_ButtonNameInteract);
+            }
+
+            return false;
+        }
+        
+        public bool GetInteractPlaceInput()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetButton(GameConstants.k_ButtonNameFire);
             }
 
             return false;
