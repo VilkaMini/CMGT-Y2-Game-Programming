@@ -186,19 +186,34 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-
                 bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadSwitchWeapon) != 0f;
                 string axisName = isGamepad
                     ? GameConstants.k_ButtonNameGamepadSwitchWeapon
                     : GameConstants.k_ButtonNameSwitchWeapon;
+                
+                if (!m_LockFire)
+                {
+                    if (Input.GetAxis(axisName) > 0f)
+                        return -1;
+                    else if (Input.GetAxis(axisName) < 0f)
+                        return 1;
+                    else if (Input.GetAxis(GameConstants.k_ButtonNameNextWeapon) > 0f)
+                        return -1;
+                    else if (Input.GetAxis(GameConstants.k_ButtonNameNextWeapon) < 0f)
+                        return 1;
+                }
+            }
 
-                if (Input.GetAxis(axisName) > 0f)
-                    return -1;
-                else if (Input.GetAxis(axisName) < 0f)
-                    return 1;
-                else if (Input.GetAxis(GameConstants.k_ButtonNameNextWeapon) > 0f)
-                    return -1;
-                else if (Input.GetAxis(GameConstants.k_ButtonNameNextWeapon) < 0f)
+            return 0;
+        }
+
+        public int GetConstructionObjectInput()
+        {
+            if (CanProcessInput())
+            {
+                if (Input.GetButtonDown(GameConstants.k_ButtonNameNextWeapon))
+                    return -1;  
+                else if (Input.GetButtonDown(GameConstants.k_ButtonNameNextWeapon))
                     return 1;
             }
 
@@ -284,7 +299,7 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                return Input.GetButton(GameConstants.k_ButtonNameFire);
+                return Input.GetButtonDown(GameConstants.k_ButtonNameFire);
             }
 
             return false;

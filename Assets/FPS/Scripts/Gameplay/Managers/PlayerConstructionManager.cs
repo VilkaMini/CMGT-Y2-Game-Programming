@@ -22,10 +22,12 @@ namespace Unity.FPS.Gameplay
         
         [SerializeField]
         private List<GameObject> constructionObjectsList;
-        private List<bool> constructionObjectPlacedList;
+        private List<bool> constructionObjectPlacedList = new List<bool>(){};
         private ConstructionState contructionState;
         private GameObject tempObject;
         private Vector3 _constructionHitLoc;
+        private int _constructionObjectId;
+        private int _previousDrawnObjectId = 0;
 
         private void Start()
         {
@@ -33,14 +35,18 @@ namespace Unity.FPS.Gameplay
             m_CharacterController = GetComponent<PlayerCharacterController>();
             for (int i = 0; i < constructionObjectsList.Count; i++)
             {
-                constructionObjectPlacedList.Add(true);
+                constructionObjectPlacedList.Add(false);
             }
         }
 
         void Update()
         {
             if (m_InputHandler.GetInteractInput()) SwichOnOffConstruction();
-            if (contructionState == ConstructionState.Empty) DrawConstructionobject(0);
+            if (contructionState == ConstructionState.Holding)
+            {
+                CheckforHeldObjectChange();
+                DrawConstructionobject(_constructionObjectId);
+            }
             if (m_InputHandler.GetInteractPlaceInput() && tempObject) PlaceConstruction();
         }
         
@@ -48,7 +54,7 @@ namespace Unity.FPS.Gameplay
         {
             if (contructionState == ConstructionState.Off)
             {
-                contructionState = ConstructionState.Empty;
+                contructionState = ConstructionState.Holding;
                 m_InputHandler.LockFire(true);
                 return;
             }
@@ -62,12 +68,28 @@ namespace Unity.FPS.Gameplay
         /// </summary>
         private void PlaceConstruction()
         {
+            constructionObjectPlacedList[_constructionObjectId] = true;
             tempObject = null;
         }
 
         private void DrawConstructionobject(int objectPrefabId)
         {
+            // if construction already placed, do not draw and destroy draw if exists
+            if (constructionObjectPlacedList[objectPrefabId])
+            {
+                if (tempObject) Destroy(tempObject);
+                return;
+            }
+            
             _constructionHitLoc = CheckIfHitsmesh();
+            
+            // if draw construction has changed, draw new one
+            if (_previousDrawnObjectId != objectPrefabId)
+            {
+                _previousDrawnObjectId = objectPrefabId;
+                Destroy(tempObject);
+                tempObject = Instantiate(constructionObjectsList[objectPrefabId]);
+            }
             if (_constructionHitLoc != Vector3.zero && !tempObject)
             {
                 tempObject = Instantiate(constructionObjectsList[objectPrefabId]);
@@ -93,6 +115,28 @@ namespace Unity.FPS.Gameplay
                 return hit.point;
             }
             return Vector3.zero;
+        }
+
+        private void CheckforHeldObjectChange()
+        {
+            int constructionObjectChanged = m_InputHandler.GetConstructionObjectInput();
+            if (constructionObjectChanged != 0)
+            {
+                _constructionObjectId = CheckForAvailableConstruction(_constructionObjectId + constructionObjectChanged);
+            }
+        }
+
+        private int CheckForAvailableConstruction(int indexToCheck)
+        {
+            if (constructionObjectPlacedList.Count <= indexToCheck)
+            {
+                return  0;
+            }
+            if (indexToCheck < 0)
+            {
+                return constructionObjectsList.Count-1;
+            }
+            return indexToCheck;
         }
     }
 }
