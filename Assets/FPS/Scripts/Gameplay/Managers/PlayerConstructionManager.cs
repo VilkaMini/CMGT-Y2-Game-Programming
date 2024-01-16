@@ -110,7 +110,7 @@ namespace Unity.FPS.Gameplay
         private (Vector3, Vector3) CheckIfHitsmesh()
         {
             RaycastHit hit;
-            if (Physics.Raycast(m_CharacterController.PlayerCamera.transform.position, m_CharacterController.PlayerCamera.transform.forward, out hit, ConstructionReach))
+            if (Physics.Raycast(m_CharacterController.PlayerCamera.transform.position, m_CharacterController.PlayerCamera.transform.forward, out hit, ConstructionReach, ~(1<<13)))
             {
                 return (hit.point, hit.normal);
             }

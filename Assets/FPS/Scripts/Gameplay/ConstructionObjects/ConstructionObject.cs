@@ -1,18 +1,43 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SphereCollider))]
 public class ConstructionObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum ConstructionObjectStatus
     {
-        
+        Built,
+        Active
     }
 
-    // Update is called once per frame
-    void Update()
+    protected SphereCollider _collider;
+    [SerializeField]protected List<GameObject> objectsInRange = new List<GameObject>();
+    
+    [SerializeField] protected float range;
+    protected ConstructionObjectStatus _status;
+
+    private void Start()
     {
-        
+        _collider = GetComponent<SphereCollider>();
+        _collider.isTrigger = true;
+        _collider.radius = range;   
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            objectsInRange.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            objectsInRange.Remove(other.gameObject);
+        }
     }
 }
