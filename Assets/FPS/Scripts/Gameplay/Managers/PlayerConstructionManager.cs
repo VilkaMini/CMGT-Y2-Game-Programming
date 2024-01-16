@@ -26,6 +26,7 @@ namespace Unity.FPS.Gameplay
         private ConstructionState contructionState;
         private GameObject tempObject;
         private Vector3 _constructionHitLoc;
+        private Vector3 _constructionHitNormal;
         private int _constructionObjectId;
         private int _previousDrawnObjectId = 0;
 
@@ -81,22 +82,21 @@ namespace Unity.FPS.Gameplay
                 return;
             }
             
-            _constructionHitLoc = CheckIfHitsmesh();
+            (_constructionHitLoc, _constructionHitNormal) = CheckIfHitsmesh();
             
             // if draw construction has changed, draw new one
             if (_previousDrawnObjectId != objectPrefabId)
             {
                 _previousDrawnObjectId = objectPrefabId;
                 Destroy(tempObject);
-                tempObject = Instantiate(constructionObjectsList[objectPrefabId]);
             }
-            if (_constructionHitLoc != Vector3.zero && !tempObject)
+
+            if (_constructionHitLoc != Vector3.zero)
             {
-                tempObject = Instantiate(constructionObjectsList[objectPrefabId]);
-            }
-            else if (_constructionHitLoc != Vector3.zero && tempObject)
-            {
-                tempObject.transform.position = _constructionHitLoc;
+                if (tempObject) { tempObject.transform.position = _constructionHitLoc; }
+                else { tempObject = Instantiate(constructionObjectsList[objectPrefabId]); }
+
+                tempObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, _constructionHitNormal);
             }
             else if (_constructionHitLoc == Vector3.zero)
             {
@@ -107,14 +107,14 @@ namespace Unity.FPS.Gameplay
         /// <summary>
         /// Method <b>CheckIfHitsmesh</b> checks if there is a mesh in front of the camera.
         /// </summary>
-        private Vector3 CheckIfHitsmesh()
+        private (Vector3, Vector3) CheckIfHitsmesh()
         {
             RaycastHit hit;
             if (Physics.Raycast(m_CharacterController.PlayerCamera.transform.position, m_CharacterController.PlayerCamera.transform.forward, out hit, ConstructionReach))
             {
-                return hit.point;
+                return (hit.point, hit.normal);
             }
-            return Vector3.zero;
+            return (Vector3.zero, Vector3.zero);
         }
 
         private void CheckforHeldObjectChange()
