@@ -6,17 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class ConstructionObject : MonoBehaviour
 {
-    public enum ConstructionObjectStatus
-    {
-        Built,
-        Active
-    }
-
     protected SphereCollider _collider;
     [SerializeField]protected List<GameObject> objectsInRange = new List<GameObject>();
     
     [SerializeField] protected float range;
-    protected ConstructionObjectStatus _status;
 
     private void Start()
     {

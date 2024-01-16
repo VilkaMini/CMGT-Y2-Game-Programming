@@ -23,7 +23,7 @@
       </counter>
       <counter>
         <item-type type-id="property" type="Property" />
-        <value>37</value>
+        <value>39</value>
       </counter>
       <counter>
         <item-type type-id="dependency" type="Dependency" />
@@ -139,6 +139,7 @@
         <type id="ConstructionObjectStatus" name="ConstructionObjectStatus" />
         <type id="Class:decf34e606ca454cb072b036b5d50d76" name="ConstructionObject" class-ref="decf34e606ca454cb072b036b5d50d76" />
         <type id="Vector3" name="Vector3" />
+        <type id="SphereCollider" name="SphereCollider" />
         <type id="Class:8de9260fe1dd4243b38ee0df903b0d6f" name="GameConstants" class-ref="8de9260fe1dd4243b38ee0df903b0d6f" />
         <type id="Class:82477ef052374c719fb419ad6de74457" name="ConstructionState" class-ref="82477ef052374c719fb419ad6de74457" />
         <type id="GameObject" name="GameObject" />
@@ -167,12 +168,12 @@
         <attribute id="af8024f7f1eb64b588e175defb653286d378" cid="PROP023" name="targetsWithHealth" creation-date="12/12/2023 15:22:12" property-ref="a02fd3e80e694560859bf34593962154" />
       </attributes>
       <operations>
-        <operation id="o480516682e9a4d61a03af48307857d4d279" cid="OP006" name="CheckIfHasHealth" creation-date="12/12/2023 15:16:48" type="" type-id="" visibility="public">
+        <operation id="o480516682e9a4d61a03af48307857d4d279" cid="OP006" name="CheckIfHasHealth" creation-date="12/12/2023 15:16:48" type="" type-id="" visibility="private">
           <parameters>
             <parameter id="pad915a217fd04369872fd4f4b60dfdc0" name="collidedObject" type="Object" type-id="Uml.Object" creation-date="12/12/2023 15:17:21" />
           </parameters>
         </operation>
-        <operation id="o5784eb65a6f647d78835dec4207bb1ef796" cid="OP009" name="HealAll" creation-date="12/12/2023 15:21:41" type="" type-id="" visibility="public" />
+        <operation id="o5784eb65a6f647d78835dec4207bb1ef796" cid="OP009" name="HealAll" creation-date="12/12/2023 15:21:41" type="" type-id="" visibility="private" />
       </operations>
     </item>
     <item id="371fc97a929b46c59e647bd3b24540dd" cid="PROP016" type="property" owner="c774329d40ec4930bcc91314d9df438c" creator="" creation-date="12/12/2023 15:09:38" visibility="private">
@@ -209,7 +210,7 @@
       </meta>
       <abstract-items />
       <sub-models />
-      <diagram type="uml-class" id="p535a419269e7429494327225b6e923ae_648720113" name="Reusable weapon system" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-90,324" zoom="0.9">
+      <diagram type="uml-class" id="p535a419269e7429494327225b6e923ae_648720113" name="Reusable weapon system" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-90,144" zoom="0.9">
         <style>
           <background-color index="1" color="#FFFFFFFF" />
           <background-color index="2" color="#FFFFFFFF" />
@@ -251,8 +252,8 @@
               <attribute id="a43c83f317053485db1afe4cb5386c5e8818" cid="PROP022" name="_fireSpeed" creation-date="12/12/2023 15:20:56" property-ref="65d32bf5a8b14b0bbef5f4d8f001ff34" />
             </attributes>
             <operations>
-              <operation id="oe90eea94714742419c3c764dd1473c02563" cid="OP007" name="SearchForTarget" creation-date="12/12/2023 15:20:37" type="" type-id="" visibility="public" />
-              <operation id="o33ecacd203db4254b5e15f8203960f44374" cid="OP008" name="ShootAtTarget" creation-date="12/12/2023 15:20:45" type="" type-id="" visibility="public" />
+              <operation id="oe90eea94714742419c3c764dd1473c02563" cid="OP007" name="SearchForTarget" creation-date="12/12/2023 15:20:37" type="" type-id="" visibility="private" />
+              <operation id="o33ecacd203db4254b5e15f8203960f44374" cid="OP008" name="ShootAtTarget" creation-date="12/12/2023 15:20:45" type="" type-id="" visibility="private" />
             </operations>
           </item>
           <item id="e18e3b39301b44c7a763a4cb0d80c0ed" cid="REL003" type="relationship" creator="" creation-date="12/12/2023 15:01:39" from="decf34e606ca454cb072b036b5d50d76" to="ae58e375329f47e5b1d247ece44b2b38" visibility="package">
@@ -320,6 +321,9 @@
           <item id="6db1be0fba3b4604aa5dcd16967ab354" cid="PROP004" type="property" name="constructionState" owner="ae58e375329f47e5b1d247ece44b2b38" creator="" creation-date="12/10/2023 16:46:30" visibility="private">
             <structural-feature type="ConstructionState" type-id="Class:7a1a5e10e9504ecba64649077f4ec750" />
           </item>
+          <item id="99bb5aa7a2e1404dba7fc9ae04c2a0c4" cid="PROP037" type="property" name="_collider" owner="decf34e606ca454cb072b036b5d50d76" creator="" creation-date="01/16/2024 15:49:52" visibility="private">
+            <structural-feature type="SphereCollider" type-id="SphereCollider" />
+          </item>
           <item id="bf0286f8f64d4f68b693341d93f72ea2" cid="PROP019" type="property" name="_targetPosition" owner="57930d811a9e4818aa986a890313eb5b" creator="" creation-date="12/12/2023 15:14:50" visibility="private">
             <structural-feature multiplicity="3" type="Real" type-id="Uml.Real" />
           </item>
@@ -362,11 +366,16 @@
               <end-role id="umlar-43dd2fdc-b5e3-46d1-8c79-f69f5affdc98" name="" navigability="" association-type="association" visibility="private" property-ref="e6bda62a6d5f42d1a0cc27fc40577065" />
             </relation>
           </item>
+          <item id="70cc19c8b12e4a68be1e4e937d278e5d" cid="PROP038" type="property" name="objectsInRange" owner="decf34e606ca454cb072b036b5d50d76" creator="" creation-date="01/16/2024 15:50:15" visibility="private">
+            <structural-feature multiplicity="1..*" type="GameObject" type-id="GameObject" />
+          </item>
           <item id="decf34e606ca454cb072b036b5d50d76" cid="C005" type="class" name="ConstructionObject" creator="" creation-date="12/12/2023 15:01:24" visibility="undefined">
             <owned-items />
             <attributes>
               <attribute id="ada19d02d1af64790b484d15e62a0dd65966" cid="PROP025" name="status" creation-date="12/12/2023 15:41:25" property-ref="f1fd65a2ed5044e280bb155578ec0e46" />
               <attribute id="aa8b5dabdc7ad4998af0b8e835472769a79" cid="PROP036" name="range" creation-date="01/16/2024 14:07:36" property-ref="1ca6901287034325bfb7ff926f1647d3" />
+              <attribute id="a1fe034d5c8fa4f539753763aef4662ba461" cid="PROP037" name="_collider" creation-date="01/16/2024 15:49:52" property-ref="99bb5aa7a2e1404dba7fc9ae04c2a0c4" />
+              <attribute id="ae3fd405a7df440eeb794d626802fead6960" cid="PROP038" name="objectsInRange" creation-date="01/16/2024 15:50:15" property-ref="70cc19c8b12e4a68be1e4e937d278e5d" />
             </attributes>
           </item>
           <item id="668cf5fc8a67417eacae6cbee0a6d0db" cid="PROP034" type="property" name="_previousDrawnObjectId" owner="ae58e375329f47e5b1d247ece44b2b38" creator="" creation-date="01/16/2024 14:03:11" visibility="undefined">
