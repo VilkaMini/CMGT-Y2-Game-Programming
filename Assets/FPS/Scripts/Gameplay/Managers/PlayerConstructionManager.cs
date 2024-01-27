@@ -13,6 +13,12 @@ namespace Unity.FPS.Gameplay
             Holding
         }
         
+        public enum StatusOfConstruction
+        {
+            Held,
+            Placed
+        }
+        
         private PlayerInputHandler m_InputHandler;
         private PlayerCharacterController m_CharacterController;
         
