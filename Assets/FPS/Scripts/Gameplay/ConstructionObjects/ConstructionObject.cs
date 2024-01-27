@@ -7,7 +7,7 @@ using UnityEngine;
 public class ConstructionObject : MonoBehaviour
 {
     protected SphereCollider _collider;
-    [SerializeField]protected List<GameObject> objectsInRange = new List<GameObject>();
+    [SerializeField] protected List<GameObject> objectsInRange = new List<GameObject>();
     
     [SerializeField] protected float range;
 

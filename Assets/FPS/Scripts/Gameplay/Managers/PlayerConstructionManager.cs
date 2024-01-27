@@ -10,7 +10,6 @@ namespace Unity.FPS.Gameplay
         public enum ConstructionState
         {
             Off,
-            Empty,
             Holding
         }
         
@@ -51,6 +50,9 @@ namespace Unity.FPS.Gameplay
             if (m_InputHandler.GetInteractPlaceInput() && tempObject) PlaceConstruction();
         }
         
+        /// <summary>
+        /// Method <b>SwichOnOffConstruction</b> turns on or off construction system. Locks the ability to fire.
+        /// </summary>
         private void SwichOnOffConstruction()
         {
             if (contructionState == ConstructionState.Off)
@@ -73,6 +75,9 @@ namespace Unity.FPS.Gameplay
             tempObject = null;
         }
 
+        /// <summary>
+        /// Method <b>DrawConstructionobject</b> draws the ghost of the construction object if mesh is hit.
+        /// </summary>
         private void DrawConstructionobject(int objectPrefabId)
         {
             // if construction already placed, do not draw and destroy draw if exists
@@ -117,6 +122,9 @@ namespace Unity.FPS.Gameplay
             return (Vector3.zero, Vector3.zero);
         }
 
+        /// <summary>
+        /// Method <b>CheckforHeldObjectChange</b> checks if the player switches to another construction object.
+        /// </summary>
         private void CheckforHeldObjectChange()
         {
             int constructionObjectChanged = m_InputHandler.GetConstructionObjectInput();
@@ -126,6 +134,9 @@ namespace Unity.FPS.Gameplay
             }
         }
 
+        /// <summary>
+        /// Method <b>CheckForAvailableConstruction</b> checks the next available construction object.
+        /// </summary>
         private int CheckForAvailableConstruction(int indexToCheck)
         {
             if (constructionObjectPlacedList.Count <= indexToCheck)
