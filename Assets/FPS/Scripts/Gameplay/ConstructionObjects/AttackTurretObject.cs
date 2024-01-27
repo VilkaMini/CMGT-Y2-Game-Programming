@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.FPS.Game;
@@ -28,7 +27,10 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
                 ShootAtTarget();
             }
         }
-
+        
+        /// <summary>
+        /// Method <b>OrientTowardsTarget</b> orients the muzzle of the turret towards the target..
+        /// </summary>
         private void OrientTowardsTarget()
         {
             Vector3 direction = _targetPosition - turretSwivel.position;
@@ -37,7 +39,10 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
 
             turretSwivel.rotation = targetRotation;
         }
-
+        
+        /// <summary>
+        /// Method <b>SearchForTarget</b> searches through the trigger collision objects to find the nearest to the turret..
+        /// </summary>
         private void SearchForTarget()
         {
             List<float> distances = new List<float>();
@@ -51,17 +56,23 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
                 }
                 distances.Add(Vector3.Distance(transform.position, objectsInRange[i].transform.position));
             }
-            if (objectsInRange.Count > 0){_targetPosition = objectsInRange[distances.IndexOf(distances.Min())].transform.position;}
+
+            if (objectsInRange.Count > 0)
+            {
+                _targetPosition = objectsInRange[distances.IndexOf(distances.Min())].transform.position;
+            }
             else
             {
                 _targetPosition = Vector3.zero;
             }
         }
 
+        /// <summary>
+        /// Method <b>ShootAtTarget</b> uses WeaponController to at the target.
+        /// </summary>
         private void ShootAtTarget()
         {
-            // Shoot the weapon
-            bool didFire = m_weapon.HandleShootInputs(false, true, false);
+            m_weapon.HandleShootInputs(false, true, false);
         }
     }
 }

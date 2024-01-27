@@ -13,20 +13,13 @@ namespace Unity.FPS.Gameplay
             Holding
         }
         
-        public enum StatusOfConstruction
-        {
-            Held,
-            Placed
-        }
-        
         private PlayerInputHandler m_InputHandler;
         private PlayerCharacterController m_CharacterController;
         
         [Header("Settings")] [Tooltip("Distance from player to place the construction.")]
         public float ConstructionReach = 10f;
         
-        [SerializeField]
-        private List<GameObject> constructionObjectsList;
+        [SerializeField] private List<GameObject> constructionObjectsList;
         private List<bool> constructionObjectPlacedList = new List<bool>(){};
         private ConstructionState contructionState;
         private GameObject tempObject;
@@ -83,6 +76,7 @@ namespace Unity.FPS.Gameplay
 
         /// <summary>
         /// Method <b>DrawConstructionobject</b> draws the ghost of the construction object if mesh is hit.
+        /// <param name="objectPrefabId">int index representing object prefab id in the list.</param>>
         /// </summary>
         private void DrawConstructionobject(int objectPrefabId)
         {
@@ -142,6 +136,7 @@ namespace Unity.FPS.Gameplay
 
         /// <summary>
         /// Method <b>CheckForAvailableConstruction</b> checks the next available construction object.
+        /// <param name="indexToCheck">int index to check next cosntruction object.</param>>
         /// </summary>
         private int CheckForAvailableConstruction(int indexToCheck)
         {

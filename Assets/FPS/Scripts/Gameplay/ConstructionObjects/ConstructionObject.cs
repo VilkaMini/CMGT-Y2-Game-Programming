@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +16,9 @@ public class ConstructionObject : MonoBehaviour
         _collider.radius = range;   
     }
 
+    /// <summary>
+    /// Method <b>OnTriggerEnter</b> adds an object to the nearbyObject list.
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -26,6 +27,9 @@ public class ConstructionObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method <b>OnTriggerExit</b> removes an object from the nearbyObject list.
+    /// </summary>
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
