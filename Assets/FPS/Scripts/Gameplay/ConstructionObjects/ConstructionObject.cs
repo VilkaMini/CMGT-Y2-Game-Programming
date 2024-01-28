@@ -4,9 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class ConstructionObject : MonoBehaviour
 {
+    public int constructionId;
     protected SphereCollider _collider;
-    [SerializeField] protected List<GameObject> objectsInRange = new List<GameObject>();
+    protected List<GameObject> objectsInRange = new List<GameObject>();
     
+    [Header("Parameters")]
+    [Tooltip("The range is the distance from the turret in which it works.")]
     [SerializeField] protected float range;
 
     private void Start()

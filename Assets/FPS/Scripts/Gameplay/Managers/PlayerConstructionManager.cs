@@ -16,9 +16,11 @@ namespace Unity.FPS.Gameplay
         private PlayerInputHandler m_InputHandler;
         private PlayerCharacterController m_CharacterController;
         
-        [Header("Settings")] [Tooltip("Distance from player to place the construction.")]
+        [Header("Settings")] 
+        [Tooltip("Distance from player to place the construction.")]
         public float ConstructionReach = 10f;
         
+        [Tooltip("Construction Objects to choose from.")]
         [SerializeField] private List<GameObject> constructionObjectsList;
         private List<bool> constructionObjectPlacedList = new List<bool>(){};
         private ConstructionState contructionState;
@@ -47,6 +49,7 @@ namespace Unity.FPS.Gameplay
                 DrawConstructionobject(_constructionObjectId);
             }
             if (m_InputHandler.GetInteractPlaceInput() && tempObject) PlaceConstruction();
+            else if (m_InputHandler.GetInteractPlaceInput()) RemoveConstruction();
         }
         
         /// <summary>
@@ -99,7 +102,10 @@ namespace Unity.FPS.Gameplay
             if (_constructionHitLoc != Vector3.zero)
             {
                 if (tempObject) { tempObject.transform.position = _constructionHitLoc; }
-                else { tempObject = Instantiate(constructionObjectsList[objectPrefabId]); }
+                else { 
+                    tempObject = Instantiate(constructionObjectsList[objectPrefabId]);
+                    tempObject.GetComponent<ConstructionObject>().constructionId = objectPrefabId;
+                }
 
                 tempObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, _constructionHitNormal);
             }
@@ -122,6 +128,29 @@ namespace Unity.FPS.Gameplay
             return (Vector3.zero, Vector3.zero);
         }
 
+        private GameObject CheckIfHitsConstruction()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(m_CharacterController.PlayerCamera.transform.position, m_CharacterController.PlayerCamera.transform.forward, out hit, ConstructionReach, (1<<13)))
+            {
+                return hit.transform.gameObject;
+            }
+            return null;
+        }
+        
+        /// <summary>
+        /// Method <b>CheckforHeldObjectChange</b> checks if the player switches to another construction object.
+        /// </summary>
+        private void RemoveConstruction()
+        {
+            GameObject construction = CheckIfHitsConstruction();
+            if (construction)
+            {
+                constructionObjectPlacedList[construction.GetComponent<ConstructionObject>().constructionId] = false;
+                Destroy(construction);
+            }
+        }
+        
         /// <summary>
         /// Method <b>CheckforHeldObjectChange</b> checks if the player switches to another construction object.
         /// </summary>

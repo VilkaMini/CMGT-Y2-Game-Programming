@@ -10,7 +10,11 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
         private Vector3 _targetPosition;
         private float _fireSpeed;
         private WeaponController m_weapon;
+        
+        [Tooltip("Turret Horizontal Swivel Point.")]
         [SerializeField] private Transform turretSwivel;
+        [Tooltip("Turret Vertical Swivel Point.")]
+        [SerializeField] private Transform turretVerticalSwivel;
 
         void Start()
         {
@@ -38,6 +42,7 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
             Quaternion targetRotation = Quaternion.LookRotation(direction);
 
             turretSwivel.rotation = targetRotation;
+            turretVerticalSwivel.rotation = targetRotation;
         }
         
         /// <summary>
