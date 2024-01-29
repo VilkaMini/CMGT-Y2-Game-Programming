@@ -297,7 +297,7 @@ namespace Unity.FPS.Gameplay
         
         public bool GetInteractPlaceInput()
         {
-            if (CanProcessInput())
+            if (CanProcessInput() && m_LockFire)
             {
                 return Input.GetButtonDown(GameConstants.k_ButtonNameFire);
             }

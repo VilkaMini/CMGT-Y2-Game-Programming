@@ -74,6 +74,7 @@ namespace Unity.FPS.Gameplay
         private void PlaceConstruction()
         {
             constructionObjectPlacedList[_constructionObjectId] = true;
+            tempObject.GetComponent<ConstructionObject>().SetupPlacement();
             tempObject = null;
         }
 
@@ -104,7 +105,7 @@ namespace Unity.FPS.Gameplay
                 if (tempObject) { tempObject.transform.position = _constructionHitLoc; }
                 else { 
                     tempObject = Instantiate(constructionObjectsList[objectPrefabId]);
-                    tempObject.GetComponent<ConstructionObject>().constructionId = objectPrefabId;
+                    tempObject.GetComponent<ConstructionObject>().constructionId = objectPrefabId; 
                 }
 
                 tempObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, _constructionHitNormal);

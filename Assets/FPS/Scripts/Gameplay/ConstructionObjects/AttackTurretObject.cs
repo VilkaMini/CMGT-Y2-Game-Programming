@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.FPS.Game;
@@ -24,11 +25,14 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
         
         private void Update()
         {
-            SearchForTarget();
-            if (_targetPosition != Vector3.zero)
+            if (Status == ConstructionStatus.Built)
             {
-                OrientTowardsTarget();
-                ShootAtTarget();
+                SearchForTarget();
+                if (_targetPosition != Vector3.zero)
+                {
+                    OrientTowardsTarget();
+                    ShootAtTarget();
+                }
             }
         }
         
@@ -37,12 +41,16 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
         /// </summary>
         private void OrientTowardsTarget()
         {
+            // Horizontal
             Vector3 direction = _targetPosition - turretSwivel.position;
             direction.y = 0f; // Ensure only rotate on X-axis
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-            turretSwivel.rotation = targetRotation;
-            turretVerticalSwivel.rotation = targetRotation;
+            Quaternion targetHorizontalRotation = Quaternion.LookRotation(direction);
+            turretSwivel.rotation = targetHorizontalRotation;
+            
+            // Vertical
+            Vector3 directionV = _targetPosition - turretVerticalSwivel.position;
+            Quaternion targetVerticalRotation = Quaternion.LookRotation(directionV);
+            turretVerticalSwivel.rotation = targetVerticalRotation;
         }
         
         /// <summary>
@@ -50,21 +58,24 @@ namespace FPS.Scripts.Gameplay.ConstructionObjects
         /// </summary>
         private void SearchForTarget()
         {
+            List<Actor> actors = new List<Actor>();
             List<float> distances = new List<float>();
-            for(int i=0; i <objectsInRange.Count; i++)
+            for (int i = 0; i < m_ActorsManager.Actors.Count; i++)
             {
-                // Special check for destroyed objects
-                if (objectsInRange[i] == null)
+                Actor actor = m_ActorsManager.Actors[i];
+                if (actor.Affiliation == 0)
                 {
-                    objectsInRange.RemoveAt(i);
-                    return;
+                    float dist = Vector3.Distance(transform.position, actor.transform.position);
+                    if (dist < range)
+                    {
+                        actors.Add(actor);
+                        distances.Add(dist);
+                    }
                 }
-                distances.Add(Vector3.Distance(transform.position, objectsInRange[i].transform.position));
             }
-
-            if (objectsInRange.Count > 0)
+            if (distances.Count > 0)
             {
-                _targetPosition = objectsInRange[distances.IndexOf(distances.Min())].transform.position;
+                _targetPosition = actors[distances.IndexOf(distances.Min())].AimPoint.transform.position;
             }
             else
             {

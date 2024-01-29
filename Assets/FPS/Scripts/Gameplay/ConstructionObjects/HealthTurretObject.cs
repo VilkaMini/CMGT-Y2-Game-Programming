@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class HealthTurretObject : ConstructionObject
 {
-    ActorsManager m_ActorsManager;
     private Vector3 _playerPos;
     private Health _playerHealth;
     
@@ -13,13 +12,12 @@ public class HealthTurretObject : ConstructionObject
     
     void Start()
     {
-        m_ActorsManager = GameObject.FindObjectOfType<ActorsManager>();
         _playerHealth = m_ActorsManager.Player.GetComponent<Health>();
     }
     
     void Update()
     {
-        HealPlayer();
+        if (Status == ConstructionStatus.Built) HealPlayer();
     }
 
     void HealPlayer()
